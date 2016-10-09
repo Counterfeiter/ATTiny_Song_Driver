@@ -3,11 +3,13 @@
  *
  * Created: 10.03.2016 15:58:08
  *  Author: Sebastian Foerster
- *	Web:	sebastianfoerster86@wordpress.com
+ *	Web:	sebastianfoerster86.wordpress.com
+ *	License: GPLv2
  */ 
 
 #include <avr/pgmspace.h>
 #include "sound.h"
+#include "songs.h"
 
 
 // Notes
@@ -23,6 +25,7 @@
 #define A		142
 #define AS		134
 #define H		127
+#define B		(H)
 
 #define C2		(239/2)
 #define CS2		(225/2)
@@ -35,7 +38,8 @@
 #define GS2		(150/2)
 #define A2		(142/2)
 #define AS2		(134/2)
-#define B2		(127/2)
+#define H2		(127/2)
+#define B2		(H2)
 
 #define PAUSE	255
 
@@ -160,6 +164,227 @@ const uint8_t PROGMEM fuer_elise[] = {
 	PAUSE,	WAIT_1
 };
 
+const uint8_t PROGMEM o_du_froehliche[] = {
+	G,		WAIT_2,
+	A,		WAIT_2,
+	G,		WAIT_4,
+	F,		WAIT_8,
+	E,		WAIT_4,
+	F,		WAIT_4,
+	G,		WAIT_2,
+	A,		WAIT_2,
+	G,		WAIT_4,
+	F,		WAIT_8,
+	E,		WAIT_4,
+	F,		WAIT_4,
+	G,		WAIT_2,
+	G,		WAIT_2,
+	A,		WAIT_2,
+	B,		WAIT_4,
+	C2,		WAIT_4,
+	B,		WAIT_2,
+	A,		WAIT_2,
+	G,		WAIT_1,
+	PAUSE,	WAIT_8,
+	D,		WAIT_4_D,
+	E,		WAIT_8,
+	D,		WAIT_4,
+	E,		WAIT_4,
+	F,		WAIT_4_D,
+	G,		WAIT_8,
+	F,		WAIT_2,
+	E,		WAIT_4_D,
+	F,		WAIT_8,
+	E,		WAIT_4,
+	F,		WAIT_8,
+	G,		WAIT_4_D,
+	A,		WAIT_8,
+	G,		WAIT_2,
+	PAUSE,	WAIT_8,
+	C2,		WAIT_4,
+	B,		WAIT_4,
+	A,		WAIT_4,
+	G,		WAIT_4,
+	C2,		WAIT_4,
+	A,		WAIT_4,
+	G,		WAIT_4,
+	F,		WAIT_4,
+	E,		WAIT_2,
+	D,		WAIT_2,
+	C,		WAIT_1,
+	PAUSE,	WAIT_8
+};
+
+const uint8_t PROGMEM leise_rieselt_der_schnee[] = {
+	A2,		WAIT_2,
+	A2,		WAIT_4,
+	G2,		WAIT_4,
+	A2,		WAIT_4,
+	G2,		WAIT_4,
+	F2,		WAIT_1_D,
+	PAUSE,	WAIT_8,
+	F2,		WAIT_2,
+	D2,		WAIT_4,
+	F2,		WAIT_4,
+	E2,		WAIT_4,
+	D2,		WAIT_4,
+	C2,		WAIT_1_D,
+	PAUSE,	WAIT_8,
+	G2,		WAIT_4,
+	FS2,	WAIT_4,
+	G2,		WAIT_4,
+	A2,		WAIT_4,
+	A2,		WAIT_4,
+	G2,		WAIT_4,
+	F2,		WAIT_1_D,
+	PAUSE,	WAIT_8,
+	G2,		WAIT_4_D,
+	D2,		WAIT_8,
+	D2,		WAIT_4,
+	E2,		WAIT_4,
+	D2,		WAIT_4,
+	E2,		WAIT_4,
+	F2,		WAIT_1_D,
+	PAUSE,	WAIT_8
+
+};
+
+const uint8_t PROGMEM froehliche_weihnacht_ueberall[] = {
+	C2,		WAIT_8,
+	B,		WAIT_8,
+	A,		WAIT_8,
+	B,		WAIT_8,
+	C2,		WAIT_4,
+	A,		WAIT_4,
+	F,		WAIT_4,
+	G,		WAIT_4,
+	A,		WAIT_2,
+	A,		WAIT_8,
+	G,		WAIT_8,
+	F,		WAIT_8,
+	G,		WAIT_8,
+	A,		WAIT_4,
+	F,		WAIT_4,
+	C,		WAIT_4,
+	E,		WAIT_4,
+	F,		WAIT_2,
+	G,		WAIT_4,
+	C2,		WAIT_4,
+	C2,		WAIT_2,
+	A,		WAIT_4,
+	C2,		WAIT_4,
+	C2,		WAIT_2,
+	G,		WAIT_4,
+	D2,		WAIT_4,
+	C2,		WAIT_4,
+	A,		WAIT_4,
+	C2,		WAIT_4,
+	B,		WAIT_8,
+	A,		WAIT_8,
+	G,		WAIT_2,
+	C2,		WAIT_8,
+	B,		WAIT_8,
+	A,		WAIT_8,
+	B,		WAIT_8,
+	C2,		WAIT_4,
+	A,		WAIT_4,
+	F,		WAIT_4,
+	G,		WAIT_4,
+	A,		WAIT_2,
+	A,		WAIT_8,
+	G,		WAIT_8,
+	F,		WAIT_8,
+	G,		WAIT_8,
+	A,		WAIT_4,
+	F,		WAIT_4,
+	C,		WAIT_4,
+	E,		WAIT_4,
+	F,		WAIT_2,
+	G,		WAIT_4_D,
+	A,		WAIT_8,
+	AS,		WAIT_4,
+	G,		WAIT_4,
+	A,		WAIT_4,
+	H,		WAIT_4,
+	C2,		WAIT_2,
+	D2,		WAIT_4,
+	C2,		WAIT_4,
+	H,		WAIT_4,
+	A,		WAIT_4,
+	AS,		WAIT_2_D,
+	PAUSE,	WAIT_8,
+	G,		WAIT_4_D,
+	A,		WAIT_8,
+	AS,		WAIT_4,
+	G,		WAIT_4,
+	A,		WAIT_4,
+	AS,		WAIT_4,
+	C2,		WAIT_2,
+	C,		WAIT_4,
+	A,		WAIT_4,
+	A,		WAIT_4,
+	G,		WAIT_4,
+	F,		WAIT_2_D,
+	PAUSE,	WAIT_8
+};
+
+const uint8_t PROGMEM zum_geburtstag_viel_glueck[] = {
+	G,		WAIT_8,
+	G,		WAIT_16,
+	A,		WAIT_4,
+	G,		WAIT_4,
+	C2,		WAIT_4,
+	H,		WAIT_2,
+	G,		WAIT_8,
+	G,		WAIT_16,
+	A,		WAIT_4,
+	G,		WAIT_4,
+	D2,		WAIT_4,
+	C2,		WAIT_4,
+	G,		WAIT_8,
+	G,		WAIT_16,
+	G2,		WAIT_4,
+	E2,		WAIT_4,
+	C2,		WAIT_8,
+	C2,		WAIT_16,
+	H,		WAIT_4,
+	A,		WAIT_4,
+	F2,		WAIT_8,
+	F2,		WAIT_16,
+	E2,		WAIT_4,
+	C2,		WAIT_4,
+	D2,		WAIT_4,
+	C2,		WAIT_2,
+	PAUSE,	WAIT_1,
+	G,		WAIT_8,
+	G,		WAIT_16,
+	A,		WAIT_4,
+	G,		WAIT_4,
+	C2,		WAIT_4,
+	H,		WAIT_2,
+	G,		WAIT_8,
+	G,		WAIT_16,
+	A,		WAIT_4,
+	G,		WAIT_4,
+	D2,		WAIT_4,
+	C2,		WAIT_4,
+	G,		WAIT_8,
+	G,		WAIT_16,
+	G2,		WAIT_4,
+	E2,		WAIT_4,
+	C2,		WAIT_8,
+	C2,		WAIT_16,
+	H,		WAIT_4,
+	A,		WAIT_4,
+	F2,		WAIT_8,
+	F2,		WAIT_16,
+	E2,		WAIT_4,
+	C2,		WAIT_4,
+	D2,		WAIT_4,
+	C2,		WAIT_2
+};
+
+
 const uint8_t PROGMEM wedding_march[] = {
 	//1.
 	G2,		WAIT_4,
@@ -211,7 +436,6 @@ const uint8_t PROGMEM wedding_march[] = {
 	D2,		WAIT_8_D,
 	E2,		WAIT_16,
 	C2,		WAIT_2
-	
 };
 
 const uint8_t PROGMEM chirp[] = {
@@ -242,13 +466,37 @@ const uint8_t PROGMEM upscale[] = {
 	130,	WAIT_8
 };
 
+const uint8_t PROGMEM batman_theme[] = {
+	C2,		WAIT_16,
+	C2,		WAIT_16,
+	H,		WAIT_16,
+	H,		WAIT_16,
+	AS,		WAIT_16,
+	AS,		WAIT_16,
+	H,		WAIT_16,
+	H,		WAIT_16,
+	C2,		WAIT_16,
+	C2,		WAIT_16,
+	H,		WAIT_16,
+	H,		WAIT_16,
+	AS,		WAIT_16,
+	AS,		WAIT_16,
+	H,		WAIT_16,
+	H,		WAIT_16,
+	C2,		WAIT_4,
+	C2,		WAIT_4_D,
+	PAUSE,	WAIT_1
+	
+};
+
 //could also be put in the flash, but don't care at the moment
-const uint16_t songlist[] = {
-	// pointer to the near flash	//length of track			//play in dur 1 - 6 (1 MHz optimized)
-	(uint16_t)wedding_march,		sizeof(wedding_march),		3,
-	(uint16_t)fuer_elise,			sizeof(fuer_elise),			4,
-	(uint16_t)chirp,				sizeof(chirp),				4,
-	(uint16_t)chirp2,				sizeof(chirp2),				4,
-	(uint16_t)upscale,				sizeof(upscale),			5
+uint16_t songlist[NUMBER_OF_SONGS * 3] = {
+	// pointer to the near flash	//length of track			//play in octave 1 - 6 (1 MHz optimized)
+	(uint16_t)o_du_froehliche,					sizeof(o_du_froehliche),				4,
+	//(uint16_t)fuer_elise,						sizeof(fuer_elise),						4,
+	(uint16_t)froehliche_weihnacht_ueberall,	sizeof(froehliche_weihnacht_ueberall),	4,
+	//(uint16_t)upscale,						sizeof(upscale),						5,
+	(uint16_t)leise_rieselt_der_schnee,			sizeof(leise_rieselt_der_schnee),		3,
+	(uint16_t)zum_geburtstag_viel_glueck,		sizeof(zum_geburtstag_viel_glueck),		4
 	
 };

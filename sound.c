@@ -3,7 +3,8 @@
  *
  * Created: 17.02.2016 14:56:51
  *  Author: Sebastian Foerster
- *	Web:	sebastianfoerster86@wordpress.com
+ *	Web:	sebastianfoerster86.wordpress.com
+ *	License: GPLv2
  */ 
 
 #include "sound.h"
@@ -70,13 +71,14 @@
 			
 				if(i < songlist[play_song-1])
 				{
+					uint8_t octave = (songlist[play_song] > 0) ? ((songlist[play_song] & 0x07) - 1) : 0;
 					//pause between note or next note?
 					if(tone) {
 						tone = 0;
-						duration = 64 / (1 << ((songlist[play_song] & 0x07) - 1)); //between every note make do a little break
+						duration = 8 * (1 << octave); //between every note make do a little break
 					} else {
 						tone = pgm_read_byte(((uint8_t*)songlist[play_song-2]) + i-1);
-						duration = ((uint32_t)pgm_read_word(&waits[pgm_read_byte(((uint8_t*)songlist[play_song-2]) + i)])) * 32 / tone * (1 << ((songlist[play_song] & 0x07) - 1));
+						duration = ((uint32_t)pgm_read_word(&waits[pgm_read_byte(((uint8_t*)songlist[play_song-2]) + i)])) * 32 / tone * (1 << octave);
 						
 						i+=2;
 					}
@@ -91,6 +93,7 @@
 					i = 1;
 					TIMSK &= ~(1<<TOIE1);
 					TCCR1 = 0;
+					GTCCR = 0;
 					play_song = 0;
 				}
 			}
@@ -103,14 +106,17 @@
 		{
 			TIMSK &= ~(1<<TOIE1);
 			TCCR1 = 0;
+			GTCCR = 0;
 		}
 	}
 
 	void Tone_Int(uint8_t divisor, uint8_t octave)
 	{
 		//set as output, always zero start
-		DDRB	|= (1 << PB0);
-		PORTB	&= ~(1 << PB0);
+		DDRB	|= (1 << GPIO_SPEAKER);
+		PORTB	&= ~(1 << GPIO_SPEAKER);
+		DDRB	|= (1 << GPIO_SPEAKER_L);
+		PORTB	&= ~(1 << GPIO_SPEAKER_L);
 	
 		//could the sound played?
 		if(divisor >= 3) {
@@ -150,8 +156,10 @@
 	{
 	
 		//set as output, always zero start
-		DDRB	|= (1 << PB0);
-		PORTB	&= ~(1 << PB0);
+		DDRB	|= (1 << GPIO_SPEAKER);
+		PORTB	&= ~(1 << GPIO_SPEAKER);
+		DDRB	|= (1 << GPIO_SPEAKER_L);
+		PORTB	&= ~(1 << GPIO_SPEAKER_L);
 	
 		//could the sound played?
 		if(divisor >= 3 && divisor != 0xFF) {
@@ -159,6 +167,7 @@
 			OCR1C = divisor;
 			OCR1A = OCR1C / 2;
 			TCCR1 = 0b11010000 | (8- (octave & 0x07));
+			GTCCR = USE_COMPARECHANNEL_B;
 
 		}
 	
@@ -168,20 +177,26 @@
 		// stop the counter
 		TCCR1 = 0;
 		TCNT1 = 0;
+		GTCCR = 0;
 	}
 
 #endif
 
 // Play a scale
+//song 0 => stop playing
+//if a song is already playing this function will do nothing
 void playTune(uint8_t song_number)
 {
-	//if a song is playing at the moment?
-	if(play_song) {
-		//don't play another song
-		return;
-	}
 	
 	if(song_number > 0) {
+		
+		//if a song is playing at the moment?
+		if(play_song) {
+			//don't play another song
+			return;
+		}
+		
+		//get the real index
 		song_number = GET_DUR_INDEX(song_number);
 		
 		if(song_number >= sizeof(songlist)) {
@@ -211,4 +226,10 @@ void playTune(uint8_t song_number)
 	#endif
 	
 
+}
+
+//check if a song is already playing
+uint8_t is_song_playing(void)
+{
+	return play_song ? 1 : 0;
 }
