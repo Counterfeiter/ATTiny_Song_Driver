@@ -233,7 +233,7 @@ const uint8_t PROGMEM leise_rieselt_der_schnee[] = {
 	G2,		WAIT_4,
 	FS2,	WAIT_4,
 	G2,		WAIT_4,
-	A2,		WAIT_4,
+	AS2,	WAIT_4,
 	A2,		WAIT_4,
 	G2,		WAIT_4,
 	F2,		WAIT_1_D,
@@ -246,7 +246,6 @@ const uint8_t PROGMEM leise_rieselt_der_schnee[] = {
 	E2,		WAIT_4,
 	F2,		WAIT_1_D,
 	PAUSE,	WAIT_8
-
 };
 
 const uint8_t PROGMEM froehliche_weihnacht_ueberall[] = {
